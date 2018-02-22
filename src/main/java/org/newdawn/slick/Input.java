@@ -1031,7 +1031,12 @@ public class Input {
 		
 		controllersInited = true;
 		try {
-			Controllers.create();
+			try {
+				Controllers.create();
+			}catch (java.lang.UnsatisfiedLinkError e){
+					throw new SlickException("No jinput loaded - Controller not supported");
+			}
+
 			int count = Controllers.getControllerCount();
 			
 			for (int i = 0; i < count; i++) {
@@ -1053,8 +1058,6 @@ public class Input {
 			throw new SlickException("Unable to create controllers");
 		} catch (NoClassDefFoundError e) {
 			// forget it, no jinput availble
-		} catch (java.lang.UnsatisfiedLinkError e){
-			throw new SlickException("No jinput loaded - Controller not supported");
 		}
 	}
 	
