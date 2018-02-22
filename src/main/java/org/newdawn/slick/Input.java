@@ -1053,6 +1053,8 @@ public class Input {
 			throw new SlickException("Unable to create controllers");
 		} catch (NoClassDefFoundError e) {
 			// forget it, no jinput availble
+		} catch (java.lang.UnsatisfiedLinkError e){
+			throw new SlickException("No jinput loaded - Controller not supported");
 		}
 	}
 	
