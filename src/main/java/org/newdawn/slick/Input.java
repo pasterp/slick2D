@@ -402,6 +402,18 @@ public class Input {
 	private int mouseClickTolerance = 5;
 
 	/**
+	 * Automatic detection for jinput natives lib, disable Controllers if not found
+	 */
+	static {
+		try{
+			System.loadLibrary("jinput_dx8");
+		}catch(UnsatisfiedLinkError e){
+			System.err.println("Native lib can't be load, controllers disabled");
+			disableControllers();
+		}
+	}
+
+	/**
 	 * Disables support for controllers. This means the jinput JAR and native libs 
 	 * are not required.
 	 */
@@ -1031,11 +1043,9 @@ public class Input {
 		
 		controllersInited = true;
 		try {
-			try {
-				Controllers.create();
-			}catch (java.lang.UnsatisfiedLinkError e){
-					throw new SlickException("No jinput loaded - Controller not supported");
-			}
+			
+			Controllers.create();
+			
 
 			int count = Controllers.getControllerCount();
 			
